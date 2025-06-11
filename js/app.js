@@ -107,10 +107,10 @@ async function fetchHistory(tkr, from, to) {
       if (!r.Date || !r.Close) return false;
       return (!from || r.Date >= from) && (!to || r.Date <= to);
     });
-  } catch (err) {
+ } catch (err) {
     console.error("Error descargando", tkr, err);
     const msg = err && err.message ? err.message : err;
-    alert("❌ No se pudo descargar precios para " + tkr + " (" + msg + ")");
+    showErrorToast("❌ No se pudo descargar precios para " + tkr + " (" + msg + ")");
     return [];
   }
 }
@@ -157,7 +157,7 @@ async function updateRiskFree () {
 
   rfInput.value = "";
   const msg = lastError && lastError.message ? lastError.message : lastError;
-  alert(`❌ No pude actualizar la tasa libre de riesgo (${msg}).\nIntenta más tarde.`);
+  showErrorToast(`❌ No pude actualizar la tasa libre de riesgo (${msg}).\nIntenta más tarde.`);
   console.error("updateRiskFree(): ambas fuentes fallaron.", lastError);
 }
 
@@ -349,6 +349,15 @@ function showDateRangeToast(startISO, endISO) {
   const toastEl   = document.getElementById("rangeToast");
   const toastBody = document.getElementById("rangeToastBody");
   toastBody.textContent = `Datos de ${startISO} a ${endISO}`;
+  const toast = bootstrap.Toast.getOrCreateInstance(toastEl, { delay:5000 });
+  toast.show();
+}
+
+/* Toast errores generales */
+function showErrorToast(message) {
+  const toastEl   = document.getElementById("errorToast");
+  const toastBody = document.getElementById("errorToastBody");
+  toastBody.textContent = message;
   const toast = bootstrap.Toast.getOrCreateInstance(toastEl, { delay:5000 });
   toast.show();
 }
