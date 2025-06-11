@@ -78,7 +78,11 @@ async function fetchHistory(tkr, from, to) {
                encodeURIComponent(`https://stooq.com/q/d/l/?s=${tkr}.US&i=${freq}`);
 
   try {
-    const csv  = await fetch(url).then(r => r.text());
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const csv  = await response.text();
     const { data } = Papa.parse(csv, { header:true, dynamicTyping:true });
 
     return data.filter(r => {
@@ -87,7 +91,8 @@ async function fetchHistory(tkr, from, to) {
     });
   } catch (err) {
     console.error("Error descargando", tkr, err);
-    alert("❌ No se pudo descargar precios para " + tkr);
+    const msg = err && err.message ? err.message : err;
+    alert("❌ No se pudo descargar precios para " + tkr + " (" + msg + ")");
     return [];
   }
 }
@@ -105,30 +110,37 @@ async function updateRiskFree () {
   const viaProxy = url =>
     "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url);
 
+  let lastError = null;
+
   try {
     // 1) FRED 3-month T-Bill (serie DTB3) en CSV
-    const csv = await fetch(
+    const resp = await fetch(
       viaProxy("https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB3")
-    ).then(r => r.text());
+    );
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const csv = await resp.text();
 
     const lastLine = csv.trim().split("\n").pop();   // ultima fila
     const rate = parseFloat(lastLine.split(",")[1]); // col 2
     if (!isNaN(rate)) { rfInput.value = rate.toFixed(2); return; }
-  } catch (_) { console.warn("Fallo FRED, probamos Stooq…"); }
+  } catch (err) { lastError = err; console.warn("Fallo FRED, probamos Stooq…", err); }
 
   try {
     // 2) Fallback Stooq (por si FRED no responde)
-    const csv = await fetch(
+    const resp = await fetch(
       viaProxy("https://stooq.com/q/l/?s=%5EIRX.US&i=d")
-    ).then(r => r.text());
+    );
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const csv = await resp.text();
 
     const close = parseFloat(csv.split("\n")[1].split(",")[4]); // línea 2, col 5
     if (!isNaN(close)) { rfInput.value = (close / 100).toFixed(2); return; }
-  } catch (_) { /* nada */ }
+  } catch (err) { lastError = err; }
 
   rfInput.value = "";
-  alert("❌ No pude actualizar la tasa libre de riesgo.\nIntenta más tarde.");
-  console.error("updateRiskFree(): ambas fuentes fallaron.");
+  const msg = lastError && lastError.message ? lastError.message : lastError;
+  alert(`❌ No pude actualizar la tasa libre de riesgo (${msg}).\nIntenta más tarde.`);
+  console.error("updateRiskFree(): ambas fuentes fallaron.", lastError);
 }
 
 /* Ejecutar al cargar la página y al pulsar ↻ */
