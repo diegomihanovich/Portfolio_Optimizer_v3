@@ -13,7 +13,24 @@
             --card-bg: #FFFFFF; /* Fondo de tarjetas */
             --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 8px rgba(0,0,0,0.07);
-            --border-radius: 6px; /* Radio de borde uniforme */
+        --border-radius: 6px; /* Radio de borde uniforme */
+        }
+
+        [data-theme='dark'] {
+            --primary-color: #3b82f6; /* Azul oscuro */
+            --secondary-color: #a855f7; /* Morado */
+            --success-color: #22c55e; /* Verde */
+            --danger-color: #ef4444; /* Rojo */
+            --warning-color: #eab308; /* Naranja */
+            --info-color: #0ea5e9; /* Cian */
+            --light-bg: #121212; /* Fondo oscuro */
+            --dark-text: #f8f9fa; /* Texto claro principal */
+            --medium-text: #ced4da; /* Texto medio claro */
+            --light-text: #adb5bd; /* Texto tenue */
+            --border-color: #495057; /* Bordes oscuros */
+            --card-bg: #1e1e1e; /* Fondo tarjetas */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.4);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.6);
         }
 
         body {
