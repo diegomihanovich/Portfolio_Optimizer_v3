@@ -1,4 +1,7 @@
 export function calcStats(priceArr, annFactor = 252) {
+  if (!Array.isArray(priceArr) || priceArr.length < 2) {
+    return { mu: 0, sigma: 0 };
+  }
   const rets = priceArr.slice(1).map((p,i)=>Math.log(p/priceArr[i]));
   const mu   = rets.reduce((s,v)=>s+v,0)/rets.length * annFactor;
 
