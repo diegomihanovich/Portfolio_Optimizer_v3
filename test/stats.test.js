@@ -9,3 +9,9 @@ test("Risk/return differ between 5-y and 10-y windows", ()=>{
   expect(Math.abs(s5.mu  - s10.mu)).toBeGreaterThan(0.005);
   expect(Math.abs(s5.sigma- s10.sigma)).toBeGreaterThan(0.005);
 });
+
+test("calcStats returns zeros for invalid input", ()=>{
+  expect(calcStats([])).toEqual({ mu: 0, sigma: 0 });
+  expect(calcStats([100])).toEqual({ mu: 0, sigma: 0 });
+  expect(calcStats(null)).toEqual({ mu: 0, sigma: 0 });
+});
