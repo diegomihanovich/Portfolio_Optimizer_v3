@@ -10,6 +10,24 @@ const inp          = document.getElementById("asset-search");
 const optimizeBtn  = document.getElementById("optimizeBtn");
 const amountInput  = document.getElementById("investment-amount");
 const riskRange    = document.getElementById("risk-tolerance");
+const themeToggle  = document.getElementById("themeToggle");
+
+function applyTheme(t){
+  document.documentElement.dataset.theme = t;
+  if(themeToggle) themeToggle.textContent = t === "dark" ? "Modo claro" : "Modo oscuro";
+}
+
+function toggleTheme(){
+  const newT = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(newT);
+  try{ localStorage.setItem("theme", newT); }catch(e){}
+}
+
+if(themeToggle){
+  const saved = localStorage.getItem("theme");
+  if(saved) applyTheme(saved);
+  themeToggle.addEventListener("click", toggleTheme);
+}
 
 let assets = [];                       // tickers en mayúsculas
 let frontierChart = null;              // referencia a Plotly
