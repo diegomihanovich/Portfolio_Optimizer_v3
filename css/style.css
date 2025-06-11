@@ -1,10 +1,10 @@
         :root {
-            --primary-color: #007BFF; /* Azul primario vibrante */
-            --secondary-color: #6C757D; /* Gris secundario */
-            --success-color: #28A745; /* Verde éxito */
-            --danger-color: #DC3545; /* Rojo peligro */
-            --warning-color: #FFC107; /* Amarillo advertencia */
-            --info-color: #17A2B8; /* Turquesa info */
+            --primary-color: #a0c4ff; /* Pastel blue */
+            --secondary-color: #cdb4db; /* Pastel lavender */
+            --success-color: #caffbf; /* Pastel green */
+            --danger-color: #ffadad; /* Pastel red */
+            --warning-color: #ffd6a5; /* Pastel orange */
+            --info-color: #9bf6ff; /* Pastel cyan */
             --light-bg: #F8F9FA; /* Fondo muy claro */
             --dark-text: #212529; /* Texto oscuro principal */
             --medium-text: #495057; /* Texto medio */
@@ -127,7 +127,7 @@
 .autocomplete li:hover{ background:#eee; }
         .selected-assets-list button {
             background-color: var(--danger-color);
-            color: white;
+            color: var(--dark-text);
             border: none;
             padding: 6px 10px;
             border-radius: var(--border-radius);
@@ -138,6 +138,7 @@
         }
         .selected-assets-list button:hover {
             background-color: #c82333;
+            color: #fff;
         }
         .chart-placeholder {
             width: 100%;
@@ -222,7 +223,7 @@
         }
         .button {
             background-color: var(--primary-color);
-            color: white;
+            color: var(--dark-text);
             padding: 12px 25px;
             border: none;
             border-radius: var(--border-radius);
@@ -236,6 +237,7 @@
         }
         .button:hover {
             background-color: #0069d9;
+            color: #fff;
             box-shadow: 0 4px 8px rgba(0,123,255,0.2);
             transform: translateY(-2px);
         }
@@ -248,6 +250,7 @@
         }
         .button.secondary:hover {
             background-color: #5a6268;
+            color: #fff;
             box-shadow: 0 4px 8px rgba(108,117,125,0.2);
         }
         .button.success {
@@ -255,6 +258,7 @@
         }
         .button.success:hover {
             background-color: #218838;
+            color: #fff;
             box-shadow: 0 4px 8px rgba(40,167,69,0.2);
         }
         footer {
@@ -300,7 +304,7 @@
         }
         .info-icon:hover {
             background-color: var(--info-color);
-            color: white;
+            color: var(--dark-text);
             border-color: var(--info-color);
         }
         .advice-section {
@@ -369,16 +373,16 @@
 .btn-primary, .btn-primary:visited {
   background: var(--primary-color);
   border-color: var(--primary-color);
-  color:#fff;
+  color: var(--dark-text);
 }
-.btn-primary:hover     { background:#0069d9; border-color:#0062cc; }
+.btn-primary:hover     { background:#0069d9; border-color:#0062cc; color:#fff; }
 .btn-primary:active,
-.btn-primary:focus     { box-shadow: 0 0 0 0.2rem rgba(0,123,255,.4); }
+.btn-primary:focus     { box-shadow: 0 0 0 0.2rem rgba(0,123,255,.4); color:#fff; }
 
 .btn-outline-secondary,
 .btn-outline-secondary:hover,
 .btn-outline-secondary:focus {
-  color:#fff;                    /* texto blanco en el 🔄 y ✕ */
+  color: var(--dark-text);        /* texto oscuro para contraste */
   background: var(--secondary-color);
   border-color: var(--secondary-color);
 }
